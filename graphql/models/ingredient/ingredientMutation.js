@@ -6,7 +6,7 @@ const dbDriver = require('../../../database/driver');
 module.exports = {
 
   createIngredient: {
-    type: gql.GraphQLBoolean,
+    type: ingredientSchema.Ingredient,
     description: 'Create new ingredient',
     args: {
       newIngredient: {
@@ -18,4 +18,25 @@ module.exports = {
     },
   },
 
+  deleteIngredient: {
+    type: gql.GraphQLBoolean,
+    description: 'Deletes an existing ingredient. Note that this will remove any existing relationships with this node.',
+    args: {
+      id: {
+        type: new gql.GraphQLNonNull(gql.GraphQLString),
+        description: 'The id of the ingredient.',
+      },
+    },
+    resolve(value, {id}) {
+      const ingredient = dbDriver.ingredientItems.exists(id);
+      if (ingredient) {
+        return dbDriver.ingredientItems.remove(ingredient._id);
+      }
+      else {
+        throw new gql.GraphQLError({
+          message: `The id ${id} does not currently exist.`,
+        });
+      }
+    },
+  },
 };

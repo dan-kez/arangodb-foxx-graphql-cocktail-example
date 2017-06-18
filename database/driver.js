@@ -1,11 +1,18 @@
 const db = require('@arangodb').db;
-const ingredientItems = module.context.collection('ingredient');
-const cocktailItems = module.context.collection('cocktail');
-const usesIngredientItems = module.context.collection('uses_ingredient');
+const graphModule =  require('@arangodb/general-graph');
+
+const recipeGraphName = module.context.collectionName('recipe');
+const recipeGraph = graphModule._graph(recipeGraphName);
+
+const ingredientItems = recipeGraph[module.context.collectionName('ingredient')];
+const cocktailItems = recipeGraph[module.context.collectionName('cocktail')];
+const usesIngredientItems = recipeGraph[module.context.collectionName('uses_ingredient')];
+
 
 module.exports = {
   db: db,
   ingredientItems: ingredientItems,
   cocktailItems: cocktailItems,
   usesIngredientItems: usesIngredientItems,
+  recipeGraph: recipeGraph,
 };

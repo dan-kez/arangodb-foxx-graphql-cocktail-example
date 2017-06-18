@@ -1,12 +1,12 @@
 {
     "name": "cocktail-app",
     "version": "0.0.1",
-    "description": "cocktail app",
+    "description": "Example Foxx GraphQL interface.",
     "engines": {
         "arangodb": "^3.1.0"
     },
-    "author": "Dan Kez",
-    "license": "Apache 2",
+    "author": "Daniel Kezerashvili",
+    "license": "MIT License",
     "main": "main.js",
     "scripts": {
         "setup": "scripts/setup.js",
